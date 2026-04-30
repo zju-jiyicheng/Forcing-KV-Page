@@ -1,0 +1,27 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="40" x2="1530" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF2E0"/>
+      <stop offset="0.5" stop-color="#F6E3CB"/>
+      <stop offset="1" stop-color="#E5D3B7"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="340" y1="160" x2="1260" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C86D44"/>
+      <stop offset="0.45" stop-color="#245E57"/>
+      <stop offset="1" stop-color="#0F1F25"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" rx="36" fill="url(#bg)"/>
+  <circle cx="1170" cy="175" r="82" fill="#F6CC89" fill-opacity="0.65"/>
+  <circle cx="310" cy="700" r="144" fill="#D89269" fill-opacity="0.38"/>
+  <ellipse cx="840" cy="450" rx="465" ry="218" stroke="url(#ring)" stroke-width="18"/>
+  <ellipse cx="840" cy="450" rx="350" ry="150" stroke="#0F1F25" stroke-opacity="0.3" stroke-width="8"/>
+  <ellipse cx="840" cy="450" rx="240" ry="92" stroke="#245E57" stroke-opacity="0.45" stroke-width="6"/>
+  <path d="M515 588C610 522 710 494 821 492C960 490 1090 529 1188 595" stroke="#C86D44" stroke-width="14" stroke-linecap="round"/>
+  <rect x="180" y="170" width="315" height="178" rx="24" fill="#0F1F25" fill-opacity="0.08" stroke="#0F1F25" stroke-opacity="0.14"/>
+  <rect x="1090" y="566" width="296" height="150" rx="24" fill="#FFF9F0" fill-opacity="0.72" stroke="#0F1F25" stroke-opacity="0.14"/>
+  <text x="240" y="250" fill="#0F1F25" fill-opacity="0.82" font-size="34" font-family="Georgia, serif" letter-spacing="3">PLACEHOLDER</text>
+  <text x="240" y="294" fill="#0F1F25" fill-opacity="0.56" font-size="18" font-family="Arial, sans-serif" letter-spacing="4">FIGURE / ORBITAL STORYBOARD</text>
+  <text x="1148" y="632" fill="#245E57" font-size="18" font-family="Arial, sans-serif" letter-spacing="4">INSERT FINAL VISUAL</text>
+  <text x="1148" y="673" fill="#0F1F25" fill-opacity="0.7" font-size="42" font-family="Georgia, serif">Long Video</text>
+</svg>

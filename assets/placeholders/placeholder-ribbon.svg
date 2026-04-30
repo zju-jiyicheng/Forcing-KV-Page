@@ -1,0 +1,18 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="220" y1="30" x2="1380" y2="880" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#102328"/>
+      <stop offset="0.52" stop-color="#1E4A4B"/>
+      <stop offset="1" stop-color="#C96A42"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" rx="36" fill="url(#bg2)"/>
+  <path d="M118 648C314 531 480 481 676 470C924 456 1104 540 1480 366" stroke="#FFE8C7" stroke-width="20" stroke-linecap="round" stroke-opacity="0.9"/>
+  <path d="M122 732C322 599 510 560 720 562C936 563 1125 646 1475 514" stroke="#F1B47C" stroke-width="10" stroke-linecap="round" stroke-opacity="0.7"/>
+  <circle cx="392" cy="248" r="126" fill="#FFE8C7" fill-opacity="0.09" stroke="#FFE8C7" stroke-opacity="0.3" stroke-width="4"/>
+  <circle cx="1175" cy="263" r="91" fill="#102328" fill-opacity="0.22" stroke="#FFE8C7" stroke-opacity="0.25" stroke-width="4"/>
+  <rect x="170" y="170" width="520" height="208" rx="28" fill="#FFF6EA" fill-opacity="0.12" stroke="#FFF6EA" stroke-opacity="0.24"/>
+  <text x="228" y="244" fill="#FFF6EA" font-size="28" font-family="Arial, sans-serif" letter-spacing="5">PLACEHOLDER RIBBON</text>
+  <text x="228" y="306" fill="#FFF6EA" fill-opacity="0.82" font-size="56" font-family="Georgia, serif">Plug-in Storyboard</text>
+  <text x="228" y="350" fill="#FFF6EA" fill-opacity="0.7" font-size="20" font-family="Arial, sans-serif">replace with benchmark, teaser frame, or architecture summary</text>
+</svg>

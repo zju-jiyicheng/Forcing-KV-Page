@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#050607" />
+  <title>LongLive + ForcingKV Story Page</title>
+  <style>
+    @font-face {
+      font-family: 'RobotoLocal';
+      src: url('./assets/fonts/roboto.woff2') format('woff2');
+      font-weight: 300 700;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'AlegreyaLocal';
+      src: url('./assets/fonts/Alegreya-Regular.ttf') format('truetype');
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #020405;
+      --panel: #0b0f11;
+      --panel-2: #11181b;
+      --line: rgba(255,255,255,.1);
+      --line-soft: rgba(255,255,255,.06);
+      --text: #f7f2ea;
+      --muted: #aab0b1;
+      --accent: #cb7a55;
+      --accent-2: #4d9d94;
+      --accent-3: #e4c79c;
+      --shadow: 0 24px 60px rgba(0,0,0,.34);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --max: 1180px;
+      --stage-max: 1040px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: 'RobotoLocal', Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(203,122,85,.16), transparent 28rem),
+        radial-gradient(circle at 82% 12%, rgba(77,157,148,.12), transparent 26rem),
+        linear-gradient(180deg, #030506 0%, #05080a 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .12;
+      background-image:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+      z-index: -2;
+    }
+
+    a { color: inherit; }
+    img, video { display: block; width: 100%; }
+
+    .shell {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 18px;
+    }
+
+    .intro {
+      padding: 28px 0 6px;
+      text-align: center;
+    }
+
+    .title-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .title-mark {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(203,122,85,.95), rgba(77,157,148,.95));
+      box-shadow: var(--shadow);
+      font-family: 'AlegreyaLocal', Georgia, serif;
+      font-size: 36px;
+      color: #fffaf0;
+    }
+
+    h1 {
+      margin: 12px 0 6px;
+      font-family: 'AlegreyaLocal', Georgia, serif;
+      font-size: clamp(42px, 7vw, 76px);
+      font-weight: 400;
+      line-height: .92;
+      letter-spacing: -.055em;
+    }
+
+    .gradient {
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-3) 44%, var(--accent-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .authors {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .author-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .intro-media {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .hero-figure,
+    .figure-stack img,
+    .abstract {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: rgba(16,22,25,.92);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-figure {
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .figure-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .figure-stack img {
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    .abstract {
+      margin-top: 16px;
+      padding: 18px 20px;
+      text-align: left;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.78;
+    }
+
+    .abstract b {
+      color: var(--text);
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: 12px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .family-list {
+      margin-top: 28px;
+      display: grid;
+      gap: 28px;
+      min-width: 0;
+    }
+
+    .family-section {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .family-head {
+      padding: 0 4px;
+    }
+
+    .family-head h2 {
+      margin: 0;
+      font-family: 'AlegreyaLocal', Georgia, serif;
+      font-size: clamp(30px, 4.4vw, 50px);
+      font-weight: 400;
+      line-height: .98;
+      letter-spacing: -.04em;
+    }
+
+    .family-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.68;
+    }
+
+    .set-block {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: rgba(11,15,17,.94);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      min-width: 0;
+    }
+
+    .set-head {
+      margin-bottom: 16px;
+    }
+
+    .set-kicker {
+      display: inline-block;
+      margin-bottom: 6px;
+      color: var(--accent-3);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .set-head h2 {
+      margin: 0;
+      font-family: 'AlegreyaLocal', Georgia, serif;
+      font-size: clamp(24px, 3.8vw, 38px);
+      font-weight: 400;
+      line-height: .96;
+      letter-spacing: -.04em;
+    }
+
+    .set-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.62;
+      max-width: 980px;
+    }
+
+    .control-btn,
+    .case-tab {
+      font: inherit;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.12);
+      background: #0c1113;
+      transition: .25s;
+      cursor: pointer;
+    }
+
+    .set-controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      width: 100%;
+      max-width: var(--stage-max);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .control-btn {
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+    }
+
+    .control-btn.primary {
+      background: linear-gradient(135deg, rgba(203,122,85,.24), rgba(77,157,148,.24));
+      border-color: rgba(228,199,156,.28);
+    }
+
+    .control-btn:hover,
+    .case-tab:hover,
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.24);
+      background-color: #141a1d;
+    }
+
+    .stage-shell {
+      position: relative;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(13,19,21,.96), rgba(18,24,27,.94));
+      width: 100%;
+      max-width: var(--stage-max);
+      margin: 0 auto;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.46);
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 20;
+      transition: .25s;
+    }
+
+    .nav-btn.left { left: 12px; }
+    .nav-btn.right { right: 12px; }
+
+    .track-viewport {
+      overflow: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .track {
+      display: flex;
+      transition: transform .5s cubic-bezier(.22,.68,.18,1);
+      will-change: transform;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      min-width: 100%;
+      max-width: 100%;
+      padding: 16px;
+      min-height: 0;
+    }
+
+    .case-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .case-title {
+      margin: 0 0 6px;
+      font-family: 'AlegreyaLocal', Georgia, serif;
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -.04em;
+    }
+
+    .prompt-box {
+      margin-bottom: 18px;
+      padding: 16px 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      color: #e8eded;
+      font-size: 14px;
+      line-height: 1.68;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .prompt-box b {
+      display: inline-block;
+      margin-right: 10px;
+      color: var(--accent-3);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .video-grid {
+      display: grid;
+      gap: 14px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .video-grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .video-grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .video-card {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+      min-width: 0;
+    }
+
+    .video-card.ours {
+      transform: translateY(-4px);
+      border-color: rgba(228,199,156,.34);
+      box-shadow: 0 0 0 1px rgba(228,199,156,.1), 0 18px 44px rgba(77,157,148,.1);
+    }
+
+    .video-label {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 3;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.56);
+      backdrop-filter: blur(10px);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .video-flag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 3;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(77,157,148,.18);
+      border: 1px solid rgba(228,199,156,.18);
+      color: #fff8eb;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+    }
+
+    .video-card video {
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+      background: #000;
+    }
+
+    .video-copy {
+      padding: 10px 12px 12px;
+    }
+
+    .video-copy code {
+      color: #d0d7d8;
+      font-size: 11px;
+      line-height: 1.46;
+      word-break: break-all;
+    }
+
+    .case-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      width: 100%;
+      max-width: var(--stage-max);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .case-tab {
+      min-width: 92px;
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .03em;
+    }
+
+    .case-tab.active {
+      background: linear-gradient(135deg, rgba(203,122,85,.28), rgba(77,157,148,.28));
+      border-color: rgba(228,199,156,.32);
+      box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    }
+
+    .footer {
+      margin: 26px 0 40px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: rgba(11,15,17,.94);
+      box-shadow: var(--shadow);
+      padding: 18px 20px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.72;
+    }
+
+    .footer p { margin: 0 0 10px; }
+
+    @media (max-width: 1200px) {
+      .intro-media {
+        grid-template-columns: 1fr;
+      }
+      .figure-stack {
+        grid-template-columns: 1fr 1fr;
+      }
+      .video-grid.cols-3,
+      .video-grid.cols-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .shell { padding: 0 14px; }
+      .figure-stack {
+        grid-template-columns: 1fr;
+      }
+      .slide,
+      .set-block {
+        padding: 14px;
+      }
+      .nav-btn.left { left: 8px; }
+      .nav-btn.right { right: 8px; }
+    }
+      .set-kicker,
+    .case-header,
+    .video-copy {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="intro">
+      <div class="title-wrap">
+        <div class="title-mark">L</div>
+      </div>
+      <h1><span class="gradient">LongLive</span> + <span class="gradient">ForcingKV</span></h1>
+      <div class="authors">
+        <span class="author-pill">Shenghai Yuan</span>
+        <span class="author-pill">Yuanyang Yin</span>
+        <span class="author-pill">Zongjian Li</span>
+        <span class="author-pill">Xinwei Huang</span>
+        <span class="author-pill">Xiao Yang</span>
+        <span class="author-pill">Li Yuan</span>
+      </div>
+
+      <div class="intro-media">
+        <img class="hero-figure" src="assets/placeholders/placeholder-orbit.svg" alt="Placeholder figure" />
+        <div class="figure-stack">
+          <img src="assets/placeholders/placeholder-ribbon.svg" alt="Placeholder figure" />
+          <img src="assets/placeholders/placeholder-panel.svg" alt="Placeholder figure" />
+        </div>
+      </div>
+
+      <div class="abstract">
+        <b>Abstract</b>
+      <div>This page follows the minimalist upper layout of the reference <code>Helios</code> project page: title, author strip, a few figures, and one concise abstract block. Below the fold, we present two higher-level families, <strong>LongLive</strong> and <strong>Self Forcing</strong>, with their selected sets vertically stacked in the exact order of <code>candidate.txt</code>. Each case keeps the compare card simple and lets the hierarchy itself communicate the base model.</div>
+      </div>
+    </section>
+
+    <section class="family-list" id="familyList"></section>
+
+    <section class="footer">
+      <p><strong>Draft note.</strong> This page is generated from local files under <code>/private/data/videos_final_1of5_paired</code>, and the case ordering follows <code>candidate.txt</code> exactly.</p>
+      <p>Regenerate after edits with <code>python3 /private/data/videos_final_1of5_paired/generate_story_page.py</code>.</p>
+    </section>
+  </main>
+
+  <script>
+    const DATA = {"stats": {"familyCount": 2, "setCount": 5, "caseCount": 34}, "placeholders": {"orbit": "assets/placeholders/placeholder-orbit.svg", "ribbon": "assets/placeholders/placeholder-ribbon.svg", "panel": "assets/placeholders/placeholder-panel.svg"}, "families": [{"id": "longlive", "label": "LongLive", "description": "Three vertically stacked set containers for 5s, 30s, and 60s cases.", "sets": [{"id": "longlive_5s", "setOrder": 1, "setLabel": "Set 1", "label": "LongLive 5s", "baseModel": "longlive", "frames": 81, "fps": 16, "seconds": 5, "cases": [{"id": "longlive_5s-1", "index": 1, "group": "longlive_5s", "setOrder": 1, "setLabel": "Set 1", "label": "LongLive 5s", "baseModel": "longlive", "frames": 81, "fps": 16, "seconds": 5, "filename": "A tranquil tableau of a beautiful wrought-iron bench surrounded by blooming flowers-2.mp4", "title": "A tranquil tableau of a beautiful wrought-iron bench surrounded by blooming flowers", "prompt": "A serene and tranquil scene of a beautifully crafted wrought-iron bench, surrounded by vibrant blooming flowers in full bloom. The bench is ornately designed with intricate scrollwork and a gentle patina, set against a backdrop of lush greenery and colorful blossoms. The flowers, a mix of roses, daisies, and tulips, create a riot of colors with soft pastel hues interspersed with bright splashes of red and yellow. The sunlight filters through the leaves, casting dappled shadows on the flowers and bench. The scene is captured in a medium close-up, focusing on the interplay between the bench and the surrounding flora, emphasizing the tranquility and beauty of the garden.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_5s/longlive/A%20tranquil%20tableau%20of%20a%20beautiful%20wrought-iron%20bench%20surrounded%20by%20blooming%20flowers-2.mp4", "path": "assets/videos/longlive_5s/longlive/A tranquil tableau of a beautiful wrought-iron bench surrounded by blooming flowers-2.mp4", "sizeMB": 0.55}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_5s/forcingkv/A%20tranquil%20tableau%20of%20a%20beautiful%20wrought-iron%20bench%20surrounded%20by%20blooming%20flowers-2.mp4", "path": "assets/videos/longlive_5s/forcingkv/A tranquil tableau of a beautiful wrought-iron bench surrounded by blooming flowers-2.mp4", "sizeMB": 0.58}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_5s/dummy/A%20tranquil%20tableau%20of%20a%20beautiful%20wrought-iron%20bench%20surrounded%20by%20blooming%20flowers-2.mp4", "path": "assets/videos/longlive_5s/dummy/A tranquil tableau of a beautiful wrought-iron bench surrounded by blooming flowers-2.mp4", "sizeMB": 0.65}]}, {"id": "longlive_5s-2", "index": 2, "group": "longlive_5s", "setOrder": 1, "setLabel": "Set 1", "label": "LongLive 5s", "baseModel": "longlive", "frames": 81, "fps": 16, "seconds": 5, "filename": "Aerial panoramic video from a drone of a fantasy land.-2.mp4", "title": "Aerial panoramic video from a drone of a fantasy land.", "prompt": "An aerial panoramic video captured from a drone flying over a fantastical landscape. The scene showcases a vibrant, otherworldly terrain with towering mystical castles, lush enchanted forests, and shimmering lakes surrounded by floating islands. The sky is filled with colorful clouds and mythical creatures flying gracefully. The camera moves smoothly in a wide, sweeping motion, capturing the grandeur of this magical realm from various angles and elevations. The video maintains a continuous panoramic view, emphasizing the vastness and wonder of the fantasy land.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_5s/longlive/Aerial%20panoramic%20video%20from%20a%20drone%20of%20a%20fantasy%20land.-2.mp4", "path": "assets/videos/longlive_5s/longlive/Aerial panoramic video from a drone of a fantasy land.-2.mp4", "sizeMB": 0.6}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_5s/forcingkv/Aerial%20panoramic%20video%20from%20a%20drone%20of%20a%20fantasy%20land.-2.mp4", "path": "assets/videos/longlive_5s/forcingkv/Aerial panoramic video from a drone of a fantasy land.-2.mp4", "sizeMB": 0.63}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_5s/dummy/Aerial%20panoramic%20video%20from%20a%20drone%20of%20a%20fantasy%20land.-2.mp4", "path": "assets/videos/longlive_5s/dummy/Aerial panoramic video from a drone of a fantasy land.-2.mp4", "sizeMB": 0.66}]}, {"id": "longlive_5s-3", "index": 3, "group": "longlive_5s", "setOrder": 1, "setLabel": "Set 1", "label": "LongLive 5s", "baseModel": "longlive", "frames": 81, "fps": 16, "seconds": 5, "filename": "A beautiful coastal beach in spring, waves lapping on sand, tilt up-2.mp4", "title": "A beautiful coastal beach in spring, waves lapping on sand, tilt up", "prompt": "In the style of Ukiyo-e, a beautiful coastal beach in spring, waves gently lap against the soft golden sand. The scene is serene and picturesque, with a clear blue sky dotted with fluffy clouds. A few palm trees stand tall along the shore, their leaves rustling softly in the breeze. In the background, a traditional Japanese fishing village can be seen, with thatched-roof houses and boats docked at the pier. The water is calm, reflecting the tranquil atmosphere. The composition follows the classic Ukiyo-e horizontal format, capturing the essence of nature and human interaction with the environment in a harmonious medium shot.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_5s/longlive/A%20beautiful%20coastal%20beach%20in%20spring%2C%20waves%20lapping%20on%20sand%2C%20tilt%20up-2.mp4", "path": "assets/videos/longlive_5s/longlive/A beautiful coastal beach in spring, waves lapping on sand, tilt up-2.mp4", "sizeMB": 0.58}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_5s/forcingkv/A%20beautiful%20coastal%20beach%20in%20spring%2C%20waves%20lapping%20on%20sand%2C%20tilt%20up-2.mp4", "path": "assets/videos/longlive_5s/forcingkv/A beautiful coastal beach in spring, waves lapping on sand, tilt up-2.mp4", "sizeMB": 0.6}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_5s/dummy/A%20beautiful%20coastal%20beach%20in%20spring%2C%20waves%20lapping%20on%20sand%2C%20tilt%20up-2.mp4", "path": "assets/videos/longlive_5s/dummy/A beautiful coastal beach in spring, waves lapping on sand, tilt up-2.mp4", "sizeMB": 0.6}]}, {"id": "longlive_5s-4", "index": 4, "group": "longlive_5s", "setOrder": 1, "setLabel": "Set 1", "label": "LongLive 5s", "baseModel": "longlive", "frames": 81, "fps": 16, "seconds": 5, "filename": "A boat sailing leisurely along the Seine River with the Eiffel Tower in background, black and white-2.mp4", "title": "A boat sailing leisurely along the Seine River with the Eiffel Tower in background, black and white", "prompt": "A vintage black and white scene featuring a small wooden sailboat gliding leisurely along the Seine River in Paris. The boat is moving smoothly with the gentle flow of the river, its sails gently billowing in the breeze. In the background, the iconic Eiffel Tower stands tall and majestic, partially obscured by the soft, fog-like mist over the water. The scene is captured in a serene medium shot, emphasizing the tranquility of the river and the timeless elegance of the cityscape.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_5s/longlive/A%20boat%20sailing%20leisurely%20along%20the%20Seine%20River%20with%20the%20Eiffel%20Tower%20in%20background%2C%20black%20and%20white-2.mp4", "path": "assets/videos/longlive_5s/longlive/A boat sailing leisurely along the Seine River with the Eiffel Tower in background, black and white-2.mp4", "sizeMB": 0.6}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_5s/forcingkv/A%20boat%20sailing%20leisurely%20along%20the%20Seine%20River%20with%20the%20Eiffel%20Tower%20in%20background%2C%20black%20and%20white-2.mp4", "path": "assets/videos/longlive_5s/forcingkv/A boat sailing leisurely along the Seine River with the Eiffel Tower in background, black and white-2.mp4", "sizeMB": 0.61}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_5s/dummy/A%20boat%20sailing%20leisurely%20along%20the%20Seine%20River%20with%20the%20Eiffel%20Tower%20in%20background%2C%20black%20and%20white-2.mp4", "path": "assets/videos/longlive_5s/dummy/A boat sailing leisurely along the Seine River with the Eiffel Tower in background, black and white-2.mp4", "sizeMB": 0.64}]}, {"id": "longlive_5s-5", "index": 5, "group": "longlive_5s", "setOrder": 1, "setLabel": "Set 1", "label": "LongLive 5s", "baseModel": "longlive", "frames": 81, "fps": 16, "seconds": 5, "filename": "A cat wearing sunglasses at a pool-2.mp4", "title": "A cat wearing sunglasses at a pool", "prompt": "A sleek black cat wearing stylish oversized sunglasses and a bright red lifeguard hat, positioned beside a pool. The cat is sitting upright with its paws resting on the edge of a poolside chair, alert and focused. The cat's fur is smooth and glossy, with a collar that has a small whistle attached. The pool is clear and sparkling, surrounded by lush green grass and palm trees. In the background, there are lounge chairs and umbrellas under a bright blue sky. The scene is set in a warm, sunny day environment. Medium close-up shot, static camera.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_5s/longlive/A%20cat%20wearing%20sunglasses%20at%20a%20pool-2.mp4", "path": "assets/videos/longlive_5s/longlive/A cat wearing sunglasses at a pool-2.mp4", "sizeMB": 0.53}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_5s/forcingkv/A%20cat%20wearing%20sunglasses%20at%20a%20pool-2.mp4", "path": "assets/videos/longlive_5s/forcingkv/A cat wearing sunglasses at a pool-2.mp4", "sizeMB": 0.57}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_5s/dummy/A%20cat%20wearing%20sunglasses%20at%20a%20pool-2.mp4", "path": "assets/videos/longlive_5s/dummy/A cat wearing sunglasses at a pool-2.mp4", "sizeMB": 0.63}]}, {"id": "longlive_5s-6", "index": 6, "group": "longlive_5s", "setOrder": 1, "setLabel": "Set 1", "label": "LongLive 5s", "baseModel": "longlive", "frames": 81, "fps": 16, "seconds": 5, "filename": "A cute happy Corgi playing in park, sunset, Van Gogh style-2.mp4", "title": "A cute happy Corgi playing in park, sunset, Van Gogh style", "prompt": "An animated style video featuring a cheerful, happy Corgi playing in a park during sunset. The Corgi is lively and energetic, running around and chasing after a red ball. It has a fluffy coat, perky ears, and a wagging tail. The park is filled with lush green grass, tall trees, and a few other park-goers in the background. The sky is painted with warm hues of orange and pink, creating a serene and picturesque atmosphere. The camera focuses closely on the Corgi as it plays, capturing its joyful expressions and playful movements.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_5s/longlive/A%20cute%20happy%20Corgi%20playing%20in%20park%2C%20sunset%2C%20Van%20Gogh%20style-2.mp4", "path": "assets/videos/longlive_5s/longlive/A cute happy Corgi playing in park, sunset, Van Gogh style-2.mp4", "sizeMB": 0.57}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_5s/forcingkv/A%20cute%20happy%20Corgi%20playing%20in%20park%2C%20sunset%2C%20Van%20Gogh%20style-2.mp4", "path": "assets/videos/longlive_5s/forcingkv/A cute happy Corgi playing in park, sunset, Van Gogh style-2.mp4", "sizeMB": 0.58}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_5s/dummy/A%20cute%20happy%20Corgi%20playing%20in%20park%2C%20sunset%2C%20Van%20Gogh%20style-2.mp4", "path": "assets/videos/longlive_5s/dummy/A cute happy Corgi playing in park, sunset, Van Gogh style-2.mp4", "sizeMB": 0.63}]}]}, {"id": "longlive_30s", "setOrder": 2, "setLabel": "Set 2", "label": "LongLive 30s", "baseModel": "longlive", "frames": 477, "fps": 16, "seconds": 30, "cases": [{"id": "longlive_30s-1", "index": 1, "group": "longlive_30s", "setOrder": 2, "setLabel": "Set 2", "label": "LongLive 30s", "baseModel": "longlive", "frames": 477, "fps": 16, "seconds": 30, "filename": "A close-up shot of a young wom-2.mp4", "title": "A close-up shot of a young wom", "prompt": "A close-up shot of a young woman driving a car, lost in thought as she gazes ahead. Raindrops blur the view of a green forest through the car window. She wears a sleek raincoat and sunglasses, her expression contemplative. Her hands gently grip the steering wheel, and her fingers tap rhythmically against it. The interior of the car is dimly lit, with water droplets clinging to the windshield. The blurred green forest and rain create a sense of mystery and introspection. The photo has a cinematic quality, capturing the moment just before a decision is made. A close-up shot from inside the car, focusing on the driver.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_30s/longlive/A%20close-up%20shot%20of%20a%20young%20wom-2.mp4", "path": "assets/videos/longlive_30s/longlive/A close-up shot of a young wom-2.mp4", "sizeMB": 3.71}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_30s/forcingkv/A%20close-up%20shot%20of%20a%20young%20wom-2.mp4", "path": "assets/videos/longlive_30s/forcingkv/A close-up shot of a young wom-2.mp4", "sizeMB": 3.7}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_30s/dummy/A%20close-up%20shot%20of%20a%20young%20wom-2.mp4", "path": "assets/videos/longlive_30s/dummy/A close-up shot of a young wom-2.mp4", "sizeMB": 3.65}]}, {"id": "longlive_30s-2", "index": 2, "group": "longlive_30s", "setOrder": 2, "setLabel": "Set 2", "label": "LongLive 30s", "baseModel": "longlive", "frames": 477, "fps": 16, "seconds": 30, "filename": "A cyclone of broken glass in a-2.mp4", "title": "A cyclone of broken glass in a", "prompt": "A dynamic urban alleyway scene capturing the chaos of a cyclone of broken glass swirling through the narrow space. The glass pieces twirl and scatter in all directions, creating a mesmerizing and dangerous vortex. The alley is dimly lit, with flickering shadows dancing across the walls. The camera angle is low, emphasizing the height of the glass cyclone and the towering buildings that frame the scene. The background shows graffiti-covered brick walls and a few discarded trash cans, adding to the gritty urban atmosphere. The glass shatters and glints in the dim light, reflecting fragments of the surrounding environment. A close-up shot with fast-paced motion blur, capturing the frenzied movement of the glass storm.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_30s/longlive/A%20cyclone%20of%20broken%20glass%20in%20a-2.mp4", "path": "assets/videos/longlive_30s/longlive/A cyclone of broken glass in a-2.mp4", "sizeMB": 3.68}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_30s/forcingkv/A%20cyclone%20of%20broken%20glass%20in%20a-2.mp4", "path": "assets/videos/longlive_30s/forcingkv/A cyclone of broken glass in a-2.mp4", "sizeMB": 3.59}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_30s/dummy/A%20cyclone%20of%20broken%20glass%20in%20a-2.mp4", "path": "assets/videos/longlive_30s/dummy/A cyclone of broken glass in a-2.mp4", "sizeMB": 3.7}]}, {"id": "longlive_30s-3", "index": 3, "group": "longlive_30s", "setOrder": 2, "setLabel": "Set 2", "label": "LongLive 30s", "baseModel": "longlive", "frames": 477, "fps": 16, "seconds": 30, "filename": "A man made of rocks walking in-2.mp4", "title": "A man made of rocks walking in", "prompt": "A full-body shot of a man crafted entirely from rocks, walking through a dense forest. His rocky form is rugged and textured, with various shades of gray and brown. He strides confidently, his steps creating small ripples in the forest floor. The forest behind him is vibrant with greenery, sunlight filtering through the canopy, casting dappled shadows. The background features tall trees with intricate bark patterns and wildflowers peeking through the underbrush. The scene has a mystical and ancient feel, reminiscent of a fantasy landscape.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_30s/longlive/A%20man%20made%20of%20rocks%20walking%20in-2.mp4", "path": "assets/videos/longlive_30s/longlive/A man made of rocks walking in-2.mp4", "sizeMB": 3.62}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_30s/forcingkv/A%20man%20made%20of%20rocks%20walking%20in-2.mp4", "path": "assets/videos/longlive_30s/forcingkv/A man made of rocks walking in-2.mp4", "sizeMB": 3.57}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_30s/dummy/A%20man%20made%20of%20rocks%20walking%20in-2.mp4", "path": "assets/videos/longlive_30s/dummy/A man made of rocks walking in-2.mp4", "sizeMB": 3.59}]}, {"id": "longlive_30s-4", "index": 4, "group": "longlive_30s", "setOrder": 2, "setLabel": "Set 2", "label": "LongLive 30s", "baseModel": "longlive", "frames": 477, "fps": 16, "seconds": 30, "filename": "A stylish woman walks down a T-2.mp4", "title": "A stylish woman walks down a T", "prompt": "A stylish woman strolls down a bustling Tokyo street, the warm glow of neon lights and animated city signs casting vibrant reflections. She wears a sleek black leather jacket paired with a flowing red dress and black boots, her black purse slung over her shoulder. Sunglasses perched on her nose and a bold red lipstick add to her confident, casual demeanor. The street is damp and reflective, creating a mirror-like effect that enhances the colorful lights and shadows. Pedestrians move about, adding to the lively atmosphere. The scene is captured in a dynamic medium shot with the woman walking slightly to one side, highlighting her graceful strides.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_30s/longlive/A%20stylish%20woman%20walks%20down%20a%20T-2.mp4", "path": "assets/videos/longlive_30s/longlive/A stylish woman walks down a T-2.mp4", "sizeMB": 3.63}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_30s/forcingkv/A%20stylish%20woman%20walks%20down%20a%20T-2.mp4", "path": "assets/videos/longlive_30s/forcingkv/A stylish woman walks down a T-2.mp4", "sizeMB": 3.53}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_30s/dummy/A%20stylish%20woman%20walks%20down%20a%20T-2.mp4", "path": "assets/videos/longlive_30s/dummy/A stylish woman walks down a T-2.mp4", "sizeMB": 3.53}]}, {"id": "longlive_30s-5", "index": 5, "group": "longlive_30s", "setOrder": 2, "setLabel": "Set 2", "label": "LongLive 30s", "baseModel": "longlive", "frames": 477, "fps": 16, "seconds": 30, "filename": "A Japanese animated film of a -2.mp4", "title": "A Japanese animated film of a", "prompt": "A Japanese animated film-style scene of a young woman standing on a ship, looking back at the camera with a gentle smile. She has long black hair tied in a loose ponytail and wears a traditional Japanese kimono with intricate patterns and vibrant colors. Her expression is serene and slightly contemplative. The ship is mid-ocean, with waves gently lapping against the sides, and the background shows a vast blue sea with distant clouds and a setting sun. The scene has a soft, dreamy quality, capturing the tranquility of the moment. A medium shot from a slightly elevated angle, emphasizing her graceful posture and the serene ocean backdrop.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_30s/longlive/A%20Japanese%20animated%20film%20of%20a%20-2.mp4", "path": "assets/videos/longlive_30s/longlive/A Japanese animated film of a -2.mp4", "sizeMB": 3.66}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_30s/forcingkv/A%20Japanese%20animated%20film%20of%20a%20-2.mp4", "path": "assets/videos/longlive_30s/forcingkv/A Japanese animated film of a -2.mp4", "sizeMB": 3.56}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_30s/dummy/A%20Japanese%20animated%20film%20of%20a%20-2.mp4", "path": "assets/videos/longlive_30s/dummy/A Japanese animated film of a -2.mp4", "sizeMB": 3.57}]}, {"id": "longlive_30s-6", "index": 6, "group": "longlive_30s", "setOrder": 2, "setLabel": "Set 2", "label": "LongLive 30s", "baseModel": "longlive", "frames": 477, "fps": 16, "seconds": 30, "filename": "A beautiful homemade video sho-2.mp4", "title": "A beautiful homemade video sho", "prompt": "A cinematic photograph in the style of a warm family moment, capturing a grandmother with neatly combed grey hair standing behind a colorful birthday cake adorned with numerous pink frosting candles and sprinkles. She leans forward with a gentle puff, extinguishing the flickering candles with a joyful expression, her eyes sparkling with happiness. The grandmother wears a light blue blouse adorned with delicate floral patterns, and the scene is filled with several happy friends and family members gathered at the wooden dining room table, their faces illuminated by soft, warm lighting. The background is slightly out of focus, emphasizing the intimate and celebratory atmosphere. A 3/4 view shot, highlighting the grandmother's warm and loving demeanor, with a beautiful blend of natural light and color tones.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_30s/longlive/A%20beautiful%20homemade%20video%20sho-2.mp4", "path": "assets/videos/longlive_30s/longlive/A beautiful homemade video sho-2.mp4", "sizeMB": 3.6}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_30s/forcingkv/A%20beautiful%20homemade%20video%20sho-2.mp4", "path": "assets/videos/longlive_30s/forcingkv/A beautiful homemade video sho-2.mp4", "sizeMB": 3.7}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_30s/dummy/A%20beautiful%20homemade%20video%20sho-2.mp4", "path": "assets/videos/longlive_30s/dummy/A beautiful homemade video sho-2.mp4", "sizeMB": 3.62}]}, {"id": "longlive_30s-7", "index": 7, "group": "longlive_30s", "setOrder": 2, "setLabel": "Set 2", "label": "LongLive 30s", "baseModel": "longlive", "frames": 477, "fps": 16, "seconds": 30, "filename": "A cartoon kangaroo disco dance-2.mp4", "title": "A cartoon kangaroo disco dance", "prompt": "A vibrant cartoon-style illustration depicting a kangaroo performing a lively disco dance. The kangaroo has a joyful expression, with large, expressive eyes and a mischievous grin. It wears a colorful sequined outfit with sparkles, including a glittery top and matching pants. Its tail is fluffed out and swaying rhythmically. The kangaroo moves with natural fluidity, one foot lifted and the other stepping forward. The background features a blurred dance floor with colorful lights and dancing figures, creating a festive atmosphere. The illustration has a smooth, hand-drawn style with exaggerated proportions. A dynamic close-up shot from a slightly elevated angle.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_30s/longlive/A%20cartoon%20kangaroo%20disco%20dance-2.mp4", "path": "assets/videos/longlive_30s/longlive/A cartoon kangaroo disco dance-2.mp4", "sizeMB": 3.55}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_30s/forcingkv/A%20cartoon%20kangaroo%20disco%20dance-2.mp4", "path": "assets/videos/longlive_30s/forcingkv/A cartoon kangaroo disco dance-2.mp4", "sizeMB": 3.64}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_30s/dummy/A%20cartoon%20kangaroo%20disco%20dance-2.mp4", "path": "assets/videos/longlive_30s/dummy/A cartoon kangaroo disco dance-2.mp4", "sizeMB": 3.6}]}, {"id": "longlive_30s-8", "index": 8, "group": "longlive_30s", "setOrder": 2, "setLabel": "Set 2", "label": "LongLive 30s", "baseModel": "longlive", "frames": 477, "fps": 16, "seconds": 30, "filename": "A close up of an older man in -2.mp4", "title": "A close up of an older man in", "prompt": "A close-up of an older man standing in a dimly lit warehouse, his weathered face etched with lines of experience. His eyes, though weary, hold a steady gaze, looking directly at the viewer. He wears a worn leather jacket over a faded t-shirt and blue jeans, his hands resting casually in his pockets. The background shows stacks of crates and old machinery, with light filtering in through dusty windows, casting long shadows. The camera gradually zooms out, revealing the vast, industrial space around him. The overall atmosphere is one of quiet resilience and endurance. A medium shot transitioning to a wider view.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_30s/longlive/A%20close%20up%20of%20an%20older%20man%20in%20-2.mp4", "path": "assets/videos/longlive_30s/longlive/A close up of an older man in -2.mp4", "sizeMB": 3.64}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_30s/forcingkv/A%20close%20up%20of%20an%20older%20man%20in%20-2.mp4", "path": "assets/videos/longlive_30s/forcingkv/A close up of an older man in -2.mp4", "sizeMB": 3.68}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_30s/dummy/A%20close%20up%20of%20an%20older%20man%20in%20-2.mp4", "path": "assets/videos/longlive_30s/dummy/A close up of an older man in -2.mp4", "sizeMB": 3.7}]}, {"id": "longlive_30s-9", "index": 9, "group": "longlive_30s", "setOrder": 2, "setLabel": "Set 2", "label": "LongLive 30s", "baseModel": "longlive", "frames": 477, "fps": 16, "seconds": 30, "filename": "A tropical fish swimming in oc-2.mp4", "title": "A tropical fish swimming in oc", "prompt": "A vibrant tropical fish swimming gracefully among colorful coral reefs in a clear, turquoise ocean. The fish has bright blue and yellow scales with a small, distinctive orange spot on its side, its fins moving fluidly. The coral reefs are alive with a variety of marine life, including small schools of colorful fish and sea turtles gliding by. The water is crystal clear, allowing for a view of the sandy ocean floor below. The reef itself is adorned with a mix of hard and soft corals in shades of red, orange, and green. The photo captures the fish from a slightly elevated angle, emphasizing its lively movements and the vivid colors of its surroundings. A close-up shot with dynamic movement.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_30s/longlive/A%20tropical%20fish%20swimming%20in%20oc-2.mp4", "path": "assets/videos/longlive_30s/longlive/A tropical fish swimming in oc-2.mp4", "sizeMB": 3.81}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_30s/forcingkv/A%20tropical%20fish%20swimming%20in%20oc-2.mp4", "path": "assets/videos/longlive_30s/forcingkv/A tropical fish swimming in oc-2.mp4", "sizeMB": 3.7}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_30s/dummy/A%20tropical%20fish%20swimming%20in%20oc-2.mp4", "path": "assets/videos/longlive_30s/dummy/A tropical fish swimming in oc-2.mp4", "sizeMB": 3.53}]}, {"id": "longlive_30s-10", "index": 10, "group": "longlive_30s", "setOrder": 2, "setLabel": "Set 2", "label": "LongLive 30s", "baseModel": "longlive", "frames": 477, "fps": 16, "seconds": 30, "filename": "A white and orange tabby cat i-2.mp4", "title": "A white and orange tabby cat i", "prompt": "A cinematic and grainy photograph captures a white and orange tabby cat joyfully darting through a dense garden, as if chasing something. The cat’s eyes are wide and filled with happiness as it jogs forward, scanning the branches, flowers, and leaves. The narrow path winds between the lush greenery, and the scene is captured from a ground-level angle, providing a low and intimate perspective. The image has warm tones and a subtle grainy texture, with scattered daylight filtering through the leaves and plants above, creating a warm contrast that highlights the cat’s orange fur. The shot is clear and sharp, with a shallow depth of field that focuses solely on the cat’s movements and expressions.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_30s/longlive/A%20white%20and%20orange%20tabby%20cat%20i-2.mp4", "path": "assets/videos/longlive_30s/longlive/A white and orange tabby cat i-2.mp4", "sizeMB": 3.72}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_30s/forcingkv/A%20white%20and%20orange%20tabby%20cat%20i-2.mp4", "path": "assets/videos/longlive_30s/forcingkv/A white and orange tabby cat i-2.mp4", "sizeMB": 3.65}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_30s/dummy/A%20white%20and%20orange%20tabby%20cat%20i-2.mp4", "path": "assets/videos/longlive_30s/dummy/A white and orange tabby cat i-2.mp4", "sizeMB": 3.43}]}, {"id": "longlive_30s-11", "index": 11, "group": "longlive_30s", "setOrder": 2, "setLabel": "Set 2", "label": "LongLive 30s", "baseModel": "longlive", "frames": 477, "fps": 16, "seconds": 30, "filename": "Macro shot of a volcano erupti-2.mp4", "title": "Macro shot of a volcano erupti", "prompt": "A highly detailed close-up photograph in a scientific documentary style, focusing on a single bacterium under a microscope. The bacterium is spherical with a smooth, translucent outer membrane, revealing internal structures such as ribosomes and a nucleus. It is floating in a clear liquid medium, with some cellular components visible inside. The background is a blurred microscopic field with faint grids and scales. The photo has a crisp, high-resolution texture, emphasizing the intricate details of the microorganism. A macro shot from a slight angle, capturing the subject's natural movement and texture.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_30s/longlive/Macro%20shot%20of%20a%20volcano%20erupti-2.mp4", "path": "assets/videos/longlive_30s/longlive/Macro shot of a volcano erupti-2.mp4", "sizeMB": 3.67}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_30s/forcingkv/Macro%20shot%20of%20a%20volcano%20erupti-2.mp4", "path": "assets/videos/longlive_30s/forcingkv/Macro shot of a volcano erupti-2.mp4", "sizeMB": 3.71}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_30s/dummy/Macro%20shot%20of%20a%20volcano%20erupti-2.mp4", "path": "assets/videos/longlive_30s/dummy/Macro shot of a volcano erupti-2.mp4", "sizeMB": 3.56}]}]}, {"id": "longlive_60s", "setOrder": 3, "setLabel": "Set 3", "label": "LongLive 60s", "baseModel": "longlive", "frames": 957, "fps": 16, "seconds": 60, "cases": [{"id": "longlive_60s-1", "index": 1, "group": "longlive_60s", "setOrder": 3, "setLabel": "Set 3", "label": "LongLive 60s", "baseModel": "longlive", "frames": 957, "fps": 16, "seconds": 60, "filename": "Aerial shot of the ocean. a ma-2.mp4", "title": "Aerial shot of the ocean. a ma", "prompt": "An aerial shot of the ocean, capturing a mesmerizing maelstrom forming in the water, swirling violently before revealing the fiery depths below. The water churns with intense energy, creating a whirlpool effect that stretches from the surface to the murky depths. The swirling currents illuminate the underwater landscape, showcasing a vivid array of colors and textures, as if the ocean floor is alight with hidden fires. The camera angle provides a dramatic overhead view, emphasizing the dynamic motion and the vastness of the ocean", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_60s/longlive/Aerial%20shot%20of%20the%20ocean.%20a%20ma-2.mp4", "path": "assets/videos/longlive_60s/longlive/Aerial shot of the ocean. a ma-2.mp4", "sizeMB": 7.26}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_60s/forcingkv/Aerial%20shot%20of%20the%20ocean.%20a%20ma-2.mp4", "path": "assets/videos/longlive_60s/forcingkv/Aerial shot of the ocean. a ma-2.mp4", "sizeMB": 7.36}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_60s/dummy/Aerial%20shot%20of%20the%20ocean.%20a%20ma-2.mp4", "path": "assets/videos/longlive_60s/dummy/Aerial shot of the ocean. a ma-2.mp4", "sizeMB": 6.82}]}, {"id": "longlive_60s-2", "index": 2, "group": "longlive_60s", "setOrder": 3, "setLabel": "Set 3", "label": "LongLive 60s", "baseModel": "longlive", "frames": 957, "fps": 16, "seconds": 60, "filename": "Highly detailed close up of a -2.mp4", "title": "Highly detailed close up of a", "prompt": "A highly detailed close-up shot in HD, focusing on dew droplets glistening on the delicate petals of a blue rose. The petals are soft and velvety, with intricate patterns and subtle color gradients. Each dew drop sparkles like tiny diamonds, catching the light and creating a mesmerizing effect. The background is blurred, emphasizing the dew and petals, with a soft focus on the edges. The photo has a clear, crisp texture, highlighting the beauty and fragility of nature.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_60s/longlive/Highly%20detailed%20close%20up%20of%20a%20-2.mp4", "path": "assets/videos/longlive_60s/longlive/Highly detailed close up of a -2.mp4", "sizeMB": 7.44}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_60s/forcingkv/Highly%20detailed%20close%20up%20of%20a%20-2.mp4", "path": "assets/videos/longlive_60s/forcingkv/Highly detailed close up of a -2.mp4", "sizeMB": 7.58}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_60s/dummy/Highly%20detailed%20close%20up%20of%20a%20-2.mp4", "path": "assets/videos/longlive_60s/dummy/Highly detailed close up of a -2.mp4", "sizeMB": 7.47}]}, {"id": "longlive_60s-3", "index": 3, "group": "longlive_60s", "setOrder": 3, "setLabel": "Set 3", "label": "LongLive 60s", "baseModel": "longlive", "frames": 957, "fps": 16, "seconds": 60, "filename": "New York City submerged like A-2.mp4", "title": "New York City submerged like A", "prompt": "A surreal and dreamlike scene in the style of a cyberpunk film, depicting New York City submerged underwater, resembling the mythical city of Atlantis. Fish, whales, sea turtles, and sharks swim through the bustling streets, which now resemble underwater landscapes. The buildings are partially submerged, their facades covered in algae and marine growth. The water is murky and filled with sunlight filtering through from above, casting colorful hues. Pedestrians, now merfolk, move gracefully through the water, interacting with the aquatic creatures. The camera angle is from a low, sweeping shot, capturing the vast expanse of this submerged metropolis.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_60s/longlive/New%20York%20City%20submerged%20like%20A-2.mp4", "path": "assets/videos/longlive_60s/longlive/New York City submerged like A-2.mp4", "sizeMB": 7.47}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_60s/forcingkv/New%20York%20City%20submerged%20like%20A-2.mp4", "path": "assets/videos/longlive_60s/forcingkv/New York City submerged like A-2.mp4", "sizeMB": 7.29}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_60s/dummy/New%20York%20City%20submerged%20like%20A-2.mp4", "path": "assets/videos/longlive_60s/dummy/New York City submerged like A-2.mp4", "sizeMB": 7.31}]}, {"id": "longlive_60s-4", "index": 4, "group": "longlive_60s", "setOrder": 3, "setLabel": "Set 3", "label": "LongLive 60s", "baseModel": "longlive", "frames": 957, "fps": 16, "seconds": 60, "filename": "Photorealistic closeup video o-2.mp4", "title": "Photorealistic closeup video o", "prompt": "A photorealistic closeup video of two pirate ships battling each other as they sail inside a steaming cup of coffee. The ships are intricately detailed, with wooden planks, sails flapping in the breeze, and cannons aimed at each other. The crew members, wearing authentic pirate attire, brandish swords and pistols, their expressions fierce and determined. The coffee foam creates a frothy, turbulent sea, with ripples and waves realistically depicted. The background is a blurred, warm brown coffee surface, with steam rising gently. The camera angle is slightly elevated, capturing the intense action from above.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_60s/longlive/Photorealistic%20closeup%20video%20o-2.mp4", "path": "assets/videos/longlive_60s/longlive/Photorealistic closeup video o-2.mp4", "sizeMB": 7.37}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_60s/forcingkv/Photorealistic%20closeup%20video%20o-2.mp4", "path": "assets/videos/longlive_60s/forcingkv/Photorealistic closeup video o-2.mp4", "sizeMB": 7.3}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_60s/dummy/Photorealistic%20closeup%20video%20o-2.mp4", "path": "assets/videos/longlive_60s/dummy/Photorealistic closeup video o-2.mp4", "sizeMB": 7.28}]}, {"id": "longlive_60s-5", "index": 5, "group": "longlive_60s", "setOrder": 3, "setLabel": "Set 3", "label": "LongLive 60s", "baseModel": "longlive", "frames": 957, "fps": 16, "seconds": 60, "filename": "This close-up shot of a Victor-2.mp4", "title": "This close-up shot of a Victor", "prompt": "A surreal first-person point-of-view shot rapidly flies through open doors, capturing the moment when the viewer suddenly finds themselves in the midst of a living room transformed into a dreamlike scene. At the center of this room stands a breathtaking waterfall, water cascading down from the ceiling and walls, creating a mesmerizing mist that fills the space. The living room is adorned with floating plants and ethereal lights, casting a soft, otherworldly glow. The camera angle shifts, providing a dynamic and immersive experience as it adjusts to the surreal environment.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_60s/longlive/This%20close-up%20shot%20of%20a%20Victor-2.mp4", "path": "assets/videos/longlive_60s/longlive/This close-up shot of a Victor-2.mp4", "sizeMB": 7.41}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_60s/forcingkv/This%20close-up%20shot%20of%20a%20Victor-2.mp4", "path": "assets/videos/longlive_60s/forcingkv/This close-up shot of a Victor-2.mp4", "sizeMB": 7.34}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_60s/dummy/This%20close-up%20shot%20of%20a%20Victor-2.mp4", "path": "assets/videos/longlive_60s/dummy/This close-up shot of a Victor-2.mp4", "sizeMB": 7.31}]}, {"id": "longlive_60s-6", "index": 6, "group": "longlive_60s", "setOrder": 3, "setLabel": "Set 3", "label": "LongLive 60s", "baseModel": "longlive", "frames": 957, "fps": 16, "seconds": 60, "filename": "Zooming through a dark forest -2.mp4", "title": "Zooming through a dark forest", "prompt": "A dynamic night-time scene in a dark forest, captured in a high-speed aerial shot. Neon-lit flora glows brightly, casting an otherworldly glow through the dense canopy. The camera zooms through the forest, capturing the intricate details of glowing flowers and bioluminescent leaves. The forest floor is shrouded in shadows, with only patches of neon light illuminating the path ahead. The air is filled with the soft rustling of leaves and the distant hum of nocturnal insects. A vivid, surreal landscape with a focus on movement and vibrant colors.", "methods": [{"key": "longlive", "label": "LongLive", "note": "host model", "role": "host", "url": "assets/videos/longlive_60s/longlive/Zooming%20through%20a%20dark%20forest%20-2.mp4", "path": "assets/videos/longlive_60s/longlive/Zooming through a dark forest -2.mp4", "sizeMB": 7.39}, {"key": "forcingkv", "label": "LongLive + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/longlive_60s/forcingkv/Zooming%20through%20a%20dark%20forest%20-2.mp4", "path": "assets/videos/longlive_60s/forcingkv/Zooming through a dark forest -2.mp4", "sizeMB": 7.02}, {"key": "dummy", "label": "LongLive + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/longlive_60s/dummy/Zooming%20through%20a%20dark%20forest%20-2.mp4", "path": "assets/videos/longlive_60s/dummy/Zooming through a dark forest -2.mp4", "sizeMB": 7.31}]}]}]}, {"id": "self_forcing", "label": "Self Forcing", "description": "Two vertically stacked set containers for 5s and 30s refine cases.", "sets": [{"id": "self_forcing_5s", "setOrder": 4, "setLabel": "Set 4", "label": "Self Forcing 5s", "baseModel": "self forcing", "frames": 81, "fps": 16, "seconds": 5, "cases": [{"id": "self_forcing_5s-1", "index": 1, "group": "self_forcing_5s", "setOrder": 4, "setLabel": "Set 4", "label": "Self Forcing 5s", "baseModel": "self forcing", "frames": 81, "fps": 16, "seconds": 5, "filename": "A confused panda in calculus class-2.mp4", "title": "A confused panda in calculus class", "prompt": "A confused panda sitting in a classroom filled with desks and chairs, surrounded by other animated animal students taking notes. The panda is holding a pencil and staring at a complex calculus equation on a chalkboard, scratching its head with a puzzled expression. The classroom has typical school decor including posters on the walls and a teacher's desk at the front. The panda looks lost and overwhelmed, trying to understand the mathematical concepts being taught. Medium shot focusing on the panda's reaction and the chalkboard in the background.", "methods": [{"key": "self_forcing", "label": "Self Forcing", "note": "host model", "role": "host", "url": "assets/videos/self_forcing_5s/self_forcing/A%20confused%20panda%20in%20calculus%20class-2.mp4", "path": "assets/videos/self_forcing_5s/self_forcing/A confused panda in calculus class-2.mp4", "sizeMB": 0.52}, {"key": "forcingkv", "label": "Self Forcing + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/self_forcing_5s/forcingkv/A%20confused%20panda%20in%20calculus%20class-2.mp4", "path": "assets/videos/self_forcing_5s/forcingkv/A confused panda in calculus class-2.mp4", "sizeMB": 0.53}, {"key": "dummy", "label": "Self Forcing + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/self_forcing_5s/dummy/A%20confused%20panda%20in%20calculus%20class-2.mp4", "path": "assets/videos/self_forcing_5s/dummy/A confused panda in calculus class-2.mp4", "sizeMB": 0.56}]}, {"id": "self_forcing_5s-2", "index": 2, "group": "self_forcing_5s", "setOrder": 4, "setLabel": "Set 4", "label": "Self Forcing 5s", "baseModel": "self forcing", "frames": 81, "fps": 16, "seconds": 5, "filename": "A tranquil tableau of house-2.mp4", "title": "A tranquil tableau of house", "prompt": "A serene and tranquil tableau of a cozy house nestled in a peaceful countryside setting. The house has a thatched roof, white walls, and wooden shutters painted a soft pastel color. A gentle breeze rustles the leaves of the surrounding trees, causing them to sway softly. The scene includes a small garden with blooming flowers and a well-tended lawn. In the background, rolling hills and a clear blue sky can be seen. The camera captures this scene from a medium shot, emphasizing the tranquility and harmony of the environment. The overall atmosphere is calm and inviting, with subtle movements of nature adding life to the scene.", "methods": [{"key": "self_forcing", "label": "Self Forcing", "note": "host model", "role": "host", "url": "assets/videos/self_forcing_5s/self_forcing/A%20tranquil%20tableau%20of%20house-2.mp4", "path": "assets/videos/self_forcing_5s/self_forcing/A tranquil tableau of house-2.mp4", "sizeMB": 0.57}, {"key": "forcingkv", "label": "Self Forcing + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/self_forcing_5s/forcingkv/A%20tranquil%20tableau%20of%20house-2.mp4", "path": "assets/videos/self_forcing_5s/forcingkv/A tranquil tableau of house-2.mp4", "sizeMB": 0.61}, {"key": "dummy", "label": "Self Forcing + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/self_forcing_5s/dummy/A%20tranquil%20tableau%20of%20house-2.mp4", "path": "assets/videos/self_forcing_5s/dummy/A tranquil tableau of house-2.mp4", "sizeMB": 0.6}]}, {"id": "self_forcing_5s-3", "index": 3, "group": "self_forcing_5s", "setOrder": 4, "setLabel": "Set 4", "label": "Self Forcing 5s", "baseModel": "self forcing", "frames": 81, "fps": 16, "seconds": 5, "filename": "A beautiful coastal beach in spring, waves lapping on sand, animated style-2.mp4", "title": "A beautiful coastal beach in spring, waves lapping on sand, animated style", "prompt": "In the style of Ukiyo-e, a beautiful coastal beach in spring, waves gently lap against the soft golden sand. The scene is serene and picturesque, with a clear blue sky dotted with fluffy clouds. A few palm trees stand tall along the shore, their leaves rustling softly in the breeze. In the background, a traditional Japanese fishing village can be seen, with thatched-roof houses and boats docked at the pier. The water is calm, reflecting the tranquil atmosphere. The composition follows the classic Ukiyo-e horizontal format, capturing the essence of nature and human interaction with the environment in a harmonious medium shot.", "methods": [{"key": "self_forcing", "label": "Self Forcing", "note": "host model", "role": "host", "url": "assets/videos/self_forcing_5s/self_forcing/A%20beautiful%20coastal%20beach%20in%20spring%2C%20waves%20lapping%20on%20sand%2C%20animated%20style-2.mp4", "path": "assets/videos/self_forcing_5s/self_forcing/A beautiful coastal beach in spring, waves lapping on sand, animated style-2.mp4", "sizeMB": 0.58}, {"key": "forcingkv", "label": "Self Forcing + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/self_forcing_5s/forcingkv/A%20beautiful%20coastal%20beach%20in%20spring%2C%20waves%20lapping%20on%20sand%2C%20animated%20style-2.mp4", "path": "assets/videos/self_forcing_5s/forcingkv/A beautiful coastal beach in spring, waves lapping on sand, animated style-2.mp4", "sizeMB": 0.6}, {"key": "dummy", "label": "Self Forcing + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/self_forcing_5s/dummy/A%20beautiful%20coastal%20beach%20in%20spring%2C%20waves%20lapping%20on%20sand%2C%20animated%20style-2.mp4", "path": "assets/videos/self_forcing_5s/dummy/A beautiful coastal beach in spring, waves lapping on sand, animated style-2.mp4", "sizeMB": 0.61}]}, {"id": "self_forcing_5s-4", "index": 4, "group": "self_forcing_5s", "setOrder": 4, "setLabel": "Set 4", "label": "Self Forcing 5s", "baseModel": "self forcing", "frames": 81, "fps": 16, "seconds": 5, "filename": "A person is planting trees-2.mp4", "title": "A person is planting trees", "prompt": "A person in a green hoodie and jeans is planting trees in a sunny meadow. They are bending down to place a sapling into a freshly dug hole, then carefully covering it with soil. The person has curly hair and a determined expression. In the background, there are several other newly planted trees, and wildflowers bloom around them. The scene has a vibrant, hopeful feel, emphasizing the importance of reforestation. Medium close-up shot focusing on the person's hands and the sapling.", "methods": [{"key": "self_forcing", "label": "Self Forcing", "note": "host model", "role": "host", "url": "assets/videos/self_forcing_5s/self_forcing/A%20person%20is%20planting%20trees-2.mp4", "path": "assets/videos/self_forcing_5s/self_forcing/A person is planting trees-2.mp4", "sizeMB": 0.57}, {"key": "forcingkv", "label": "Self Forcing + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/self_forcing_5s/forcingkv/A%20person%20is%20planting%20trees-2.mp4", "path": "assets/videos/self_forcing_5s/forcingkv/A person is planting trees-2.mp4", "sizeMB": 0.56}, {"key": "dummy", "label": "Self Forcing + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/self_forcing_5s/dummy/A%20person%20is%20planting%20trees-2.mp4", "path": "assets/videos/self_forcing_5s/dummy/A person is planting trees-2.mp4", "sizeMB": 0.6}]}, {"id": "self_forcing_5s-5", "index": 5, "group": "self_forcing_5s", "setOrder": 4, "setLabel": "Set 4", "label": "Self Forcing 5s", "baseModel": "self forcing", "frames": 81, "fps": 16, "seconds": 5, "filename": "a carrot-2.mp4", "title": "a carrot", "prompt": "A single, bright orange carrot with a vibrant green leafy top sits on a rustic wooden table. The carrot has a smooth, slightly tapered shape with visible rootlets at the base. The lighting highlights the natural sheen of the carrot's surface, casting gentle shadows. The background includes a few scattered grains and a blurred wooden texture. Close-up shot, static scene.", "methods": [{"key": "self_forcing", "label": "Self Forcing", "note": "host model", "role": "host", "url": "assets/videos/self_forcing_5s/self_forcing/a%20carrot-2.mp4", "path": "assets/videos/self_forcing_5s/self_forcing/a carrot-2.mp4", "sizeMB": 0.53}, {"key": "forcingkv", "label": "Self Forcing + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/self_forcing_5s/forcingkv/a%20carrot-2.mp4", "path": "assets/videos/self_forcing_5s/forcingkv/a carrot-2.mp4", "sizeMB": 0.53}, {"key": "dummy", "label": "Self Forcing + DummyForcing", "note": "baseline plug-in", "role": "dummy", "url": "assets/videos/self_forcing_5s/dummy/a%20carrot-2.mp4", "path": "assets/videos/self_forcing_5s/dummy/a carrot-2.mp4", "sizeMB": 0.56}]}]}, {"id": "self_forcing_30s_refine", "setOrder": 5, "setLabel": "Set 5", "label": "Self Forcing Refine 30s", "baseModel": "self forcing refine", "frames": 477, "fps": 16, "seconds": 30, "cases": [{"id": "self_forcing_30s_refine-1", "index": 1, "group": "self_forcing_30s_refine", "setOrder": 5, "setLabel": "Set 5", "label": "Self Forcing Refine 30s", "baseModel": "self forcing refine", "frames": 477, "fps": 16, "seconds": 30, "filename": "New York City submerged like A-0.mp4", "title": "New York City submerged like A", "prompt": "A surreal and dreamlike scene in the style of a cyberpunk film, depicting New York City submerged underwater, resembling the mythical city of Atlantis. Fish, whales, sea turtles, and sharks swim through the bustling streets, which now resemble underwater landscapes. The buildings are partially submerged, their facades covered in algae and marine growth. The water is murky and filled with sunlight filtering through from above, casting colorful hues. Pedestrians, now merfolk, move gracefully through the water, interacting with the aquatic creatures. The camera angle is from a low, sweeping shot, capturing the vast expanse of this submerged metropolis.", "methods": [{"key": "self_forcing", "label": "Self Forcing Refine", "note": "host model", "role": "host", "url": "assets/videos/self_forcing_30s_refine/self_forcing/New%20York%20City%20submerged%20like%20A-0.mp4", "path": "assets/videos/self_forcing_30s_refine/self_forcing/New York City submerged like A-0.mp4", "sizeMB": 4.08}, {"key": "forcingkv", "label": "Self Forcing Refine + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/self_forcing_30s_refine/forcingkv/New%20York%20City%20submerged%20like%20A-0.mp4", "path": "assets/videos/self_forcing_30s_refine/forcingkv/New York City submerged like A-0.mp4", "sizeMB": 3.7}]}, {"id": "self_forcing_30s_refine-2", "index": 2, "group": "self_forcing_30s_refine", "setOrder": 5, "setLabel": "Set 5", "label": "Self Forcing Refine 30s", "baseModel": "self forcing refine", "frames": 477, "fps": 16, "seconds": 30, "filename": "A pencil drawing an architectu-0.mp4", "title": "A pencil drawing an architectu", "prompt": "A pencil sketch in a classic architectural drafting style, depicting a detailed floor plan of a grand mansion. The drawing includes intricate lines and measurements, with a focus on the mansion's layout, including hallways, rooms, and windows. The building features ornate columns, arched doorways, and a large central staircase. The background is a blurred view of a sunny day, with hints of greenery and trees outside the mansion's windows. The pencil strokes are soft and precise, creating a realistic and detailed representation. A close-up shot from a slightly elevated angle.", "methods": [{"key": "self_forcing", "label": "Self Forcing Refine", "note": "host model", "role": "host", "url": "assets/videos/self_forcing_30s_refine/self_forcing/A%20pencil%20drawing%20an%20architectu-0.mp4", "path": "assets/videos/self_forcing_30s_refine/self_forcing/A pencil drawing an architectu-0.mp4", "sizeMB": 3.49}, {"key": "forcingkv", "label": "Self Forcing Refine + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/self_forcing_30s_refine/forcingkv/A%20pencil%20drawing%20an%20architectu-0.mp4", "path": "assets/videos/self_forcing_30s_refine/forcingkv/A pencil drawing an architectu-0.mp4", "sizeMB": 3.57}]}, {"id": "self_forcing_30s_refine-3", "index": 3, "group": "self_forcing_30s_refine", "setOrder": 5, "setLabel": "Set 5", "label": "Self Forcing Refine 30s", "baseModel": "self forcing refine", "frames": 477, "fps": 16, "seconds": 30, "filename": "A man riding a horse through t-0.mp4", "title": "A man riding a horse through t", "prompt": "A cinematic scene from a classic western movie, featuring a rugged man riding a powerful horse through the vast Gobi Desert at sunset. The man, dressed in a dusty cowboy hat and a worn leather jacket, reins tightly on the horse's neck as he gallops across the golden sands. The sun sets dramatically behind them, casting long shadows and warm hues across the landscape. The background is filled with rolling dunes and sparse, rocky outcrops, emphasizing the harsh beauty of the desert. A dynamic wide shot from a low angle, capturing both the man and the expansive desert vista.", "methods": [{"key": "self_forcing", "label": "Self Forcing Refine", "note": "host model", "role": "host", "url": "assets/videos/self_forcing_30s_refine/self_forcing/A%20man%20riding%20a%20horse%20through%20t-0.mp4", "path": "assets/videos/self_forcing_30s_refine/self_forcing/A man riding a horse through t-0.mp4", "sizeMB": 3.35}, {"key": "forcingkv", "label": "Self Forcing Refine + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/self_forcing_30s_refine/forcingkv/A%20man%20riding%20a%20horse%20through%20t-0.mp4", "path": "assets/videos/self_forcing_30s_refine/forcingkv/A man riding a horse through t-0.mp4", "sizeMB": 3.43}]}, {"id": "self_forcing_30s_refine-4", "index": 4, "group": "self_forcing_30s_refine", "setOrder": 5, "setLabel": "Set 5", "label": "Self Forcing Refine 30s", "baseModel": "self forcing refine", "frames": 477, "fps": 16, "seconds": 30, "filename": "A giant, towering cloud in the-0.mp4", "title": "A giant, towering cloud in the", "prompt": "A dramatic, epic fantasy-style illustration depicting a towering, giant cloud shaped like a man, with thunderous lightning bolts emanating from his outstretched arms and striking the ground below. The cloud-man has a fierce, determined expression, with stormy gray clouds cascading down his form, giving him a menacing presence. His eyes glow with an intense, electric blue light, and his arms are spread wide, ready to unleash more bolts. The background shows a dark, stormy sky with heavy rain and distant lightning, creating a foreboding atmosphere. The scene is rendered in a dynamic, high-detailed style with a mix of realistic and fantastical elements. A high-angle shot capturing the full figure of the cloud-man in action.", "methods": [{"key": "self_forcing", "label": "Self Forcing Refine", "note": "host model", "role": "host", "url": "assets/videos/self_forcing_30s_refine/self_forcing/A%20giant%2C%20towering%20cloud%20in%20the-0.mp4", "path": "assets/videos/self_forcing_30s_refine/self_forcing/A giant, towering cloud in the-0.mp4", "sizeMB": 3.76}, {"key": "forcingkv", "label": "Self Forcing Refine + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/self_forcing_30s_refine/forcingkv/A%20giant%2C%20towering%20cloud%20in%20the-0.mp4", "path": "assets/videos/self_forcing_30s_refine/forcingkv/A giant, towering cloud in the-0.mp4", "sizeMB": 3.8}]}, {"id": "self_forcing_30s_refine-5", "index": 5, "group": "self_forcing_30s_refine", "setOrder": 5, "setLabel": "Set 5", "label": "Self Forcing Refine 30s", "baseModel": "self forcing refine", "frames": 477, "fps": 16, "seconds": 30, "filename": "A litter of golden retriever p-0.mp4", "title": "A litter of golden retriever p", "prompt": "A winter scene in a snowy forest, where a litter of playful golden retriever puppies emerge from the snow. Their heads pop out, their fluffy fur glistening in the sunlight, and they wag their tails joyfully. They are covered in snow, with some paw prints leading away into the deep snow. One puppy is burying its nose in the snow, while another chases a small ball that has rolled nearby. The background shows dense evergreen trees and a gentle slope leading up to a clearing. The air is crisp and cold, with tiny snowflakes falling gently. A close-up shot from a slightly elevated angle, capturing the lively and energetic moment.", "methods": [{"key": "self_forcing", "label": "Self Forcing Refine", "note": "host model", "role": "host", "url": "assets/videos/self_forcing_30s_refine/self_forcing/A%20litter%20of%20golden%20retriever%20p-0.mp4", "path": "assets/videos/self_forcing_30s_refine/self_forcing/A litter of golden retriever p-0.mp4", "sizeMB": 3.81}, {"key": "forcingkv", "label": "Self Forcing Refine + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/self_forcing_30s_refine/forcingkv/A%20litter%20of%20golden%20retriever%20p-0.mp4", "path": "assets/videos/self_forcing_30s_refine/forcingkv/A litter of golden retriever p-0.mp4", "sizeMB": 3.65}]}, {"id": "self_forcing_30s_refine-6", "index": 6, "group": "self_forcing_30s_refine", "setOrder": 5, "setLabel": "Set 5", "label": "Self Forcing Refine 30s", "baseModel": "self forcing refine", "frames": 477, "fps": 16, "seconds": 30, "filename": "A flock of paper airplanes flu-0.mp4", "title": "A flock of paper airplanes flu", "prompt": "A vibrant illustration in a whimsical cartoon style depicting a flock of paper airplanes fluttering through a dense jungle. The airplanes, resembling small birds, weave gracefully around towering trees, their wings fluttering gently. The jungle is lush and vibrant, with a variety of exotic plants and colorful flowers. The airplanes seem to migrate through the forest, creating a mesmerizing aerial dance. The background is rich with detailed textures, including sunlight filtering through the canopy, casting dappled shadows on the ground. A dynamic overhead view capturing the mid-flight action of the airplanes.", "methods": [{"key": "self_forcing", "label": "Self Forcing Refine", "note": "host model", "role": "host", "url": "assets/videos/self_forcing_30s_refine/self_forcing/A%20flock%20of%20paper%20airplanes%20flu-0.mp4", "path": "assets/videos/self_forcing_30s_refine/self_forcing/A flock of paper airplanes flu-0.mp4", "sizeMB": 3.65}, {"key": "forcingkv", "label": "Self Forcing Refine + ForcingKV", "note": "our method", "role": "ours", "url": "assets/videos/self_forcing_30s_refine/forcingkv/A%20flock%20of%20paper%20airplanes%20flu-0.mp4", "path": "assets/videos/self_forcing_30s_refine/forcingkv/A flock of paper airplanes flu-0.mp4", "sizeMB": 3.86}]}]}]}]};
+    const FLAT_SETS = DATA.families.flatMap(family => family.sets);
+    const setStates = FLAT_SETS.map(() => ({ caseIndex: 0, muted: true, playing: true, syncTimer: null }));
+
+    const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[ch]));
+    const shellFor = (setIndex) => document.querySelector(`[data-set-shell="${setIndex}"]`);
+
+    function renderSetScaffolds() {
+      let globalSetIndex = 0;
+      document.getElementById('familyList').innerHTML = DATA.families.map(family => {
+        const setsHtml = family.sets.map(item => {
+          const shellIndex = globalSetIndex++;
+          return `
+            <section class="set-block" data-set-shell="${shellIndex}">
+              <div class="set-head">
+                <span class="set-kicker">${escapeHtml(item.label)}</span>
+                <h2>${item.seconds}s</h2>
+                <p>${item.cases.length} selected cases in this set. Use the arrows or the case buttons below to switch.</p>
+              </div>
+
+              <div class="set-controls">
+                <button class="control-btn" data-action="mute">Mute: on</button>
+                <button class="control-btn" data-action="play">Pause</button>
+                <button class="control-btn primary" data-action="restart">Restart sync</button>
+              </div>
+
+              <div class="stage-shell">
+                <button class="nav-btn left" data-action="prev" aria-label="Previous case">&#8592;</button>
+                <button class="nav-btn right" data-action="next" aria-label="Next case">&#8594;</button>
+                <div class="track-viewport">
+                  <div class="track" data-role="track"></div>
+                </div>
+              </div>
+
+              <div class="case-tabs" data-role="case-tabs"></div>
+            </section>
+          `;
+        }).join('');
+
+        return `
+          <section class="family-section">
+            <div class="family-head">
+              <span class="set-kicker">${escapeHtml(family.label)}</span>
+              <h2>${escapeHtml(family.label)}</h2>
+              <p>${escapeHtml(family.description)}</p>
+            </div>
+            ${setsHtml}
+          </section>
+        `;
+      }).join('');
+    }
+
+    function ensureVideoLoaded(video) {
+      if (!video || video.src) return;
+      const src = video.dataset.src;
+      if (!src) return;
+      video.src = src;
+      video.load();
+    }
+
+    function ensureSlideLoaded(slide) {
+      if (!slide) return;
+      slide.querySelectorAll('video').forEach(ensureVideoLoaded);
+    }
+
+    function stopSyncTimer(setIndex) {
+      const state = setStates[setIndex];
+      if (state.syncTimer) {
+        clearInterval(state.syncTimer);
+        state.syncTimer = null;
+      }
+    }
+
+    function pauseAllSetVideos(setIndex) {
+      const shell = shellFor(setIndex);
+      if (!shell) return;
+      shell.querySelectorAll('.slide video').forEach(video => video.pause());
+    }
+
+    function syncActiveVideos(setIndex, videos, reset) {
+      const state = setStates[setIndex];
+      stopSyncTimer(setIndex);
+      if (!videos.length) return;
+
+      videos.forEach(video => {
+        ensureVideoLoaded(video);
+        video.muted = state.muted;
+        if (reset) {
+          if (video.readyState >= 1) {
+            try { video.currentTime = 0; } catch (_) {}
+          } else {
+            video.addEventListener('loadedmetadata', () => {
+              try { video.currentTime = 0; } catch (_) {}
+            }, { once: true });
+          }
+        }
+      });
+
+      if (!state.playing) return;
+
+      const master = videos[0];
+      master.play().catch(() => {});
+      videos.slice(1).forEach(video => video.play().catch(() => {}));
+
+      state.syncTimer = setInterval(() => {
+        const lead = master.currentTime;
+        videos.forEach((video, index) => {
+          if (index === 0) return;
+          if (Math.abs(video.currentTime - lead) > 0.18) {
+            video.currentTime = lead;
+          }
+          if (master.paused && !video.paused) video.pause();
+          if (!master.paused && video.paused) video.play().catch(() => {});
+        });
+      }, 240);
+    }
+
+    function videoCardHtml(method) {
+      return `
+        <div class="video-card ${escapeHtml(method.role)}">
+          <div class="video-label">${escapeHtml(method.label)}</div>
+          ${method.role === 'ours' ? '<div class="video-flag">Our method</div>' : ''}
+          <video playsinline loop muted preload="none" data-src="${escapeHtml(method.url)}"></video>
+          <div class="video-copy">
+            <code>${escapeHtml(method.path)}</code>
+          </div>
+        </div>
+      `;
+    }
+
+    function caseMetaHtml(item) {
+      return ``;
+    }
+
+    function renderTrack(setIndex) {
+      const shell = shellFor(setIndex);
+      const set = FLAT_SETS[setIndex];
+      const track = shell.querySelector('[data-role="track"]');
+      track.innerHTML = set.cases.map(item => `
+        <article class="slide">
+          <div class="case-header">
+            <div>
+              <h3 class="case-title">${escapeHtml(item.title)}</h3>
+              ${caseMetaHtml(item)}
+            </div>
+          </div>
+          <div class="prompt-box"><b>Prompt</b>${escapeHtml(item.prompt)}</div>
+          <div class="video-grid cols-${item.methods.length}">
+            ${item.methods.map(videoCardHtml).join('')}
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderCaseTabs(setIndex) {
+      const shell = shellFor(setIndex);
+      const set = FLAT_SETS[setIndex];
+      const state = setStates[setIndex];
+      const tabs = shell.querySelector('[data-role="case-tabs"]');
+      tabs.innerHTML = set.cases.map((_, index) => `
+        <button class="case-tab ${index === state.caseIndex ? 'active' : ''}" data-case-index="${index}" aria-label="Go to case ${index + 1}">Case ${index + 1}</button>
+      `).join('');
+
+      tabs.querySelectorAll('[data-case-index]').forEach(btn => {
+        btn.addEventListener('click', () => activateCase(setIndex, Number(btn.dataset.caseIndex), true));
+      });
+    }
+
+    function updateControls(setIndex) {
+      const shell = shellFor(setIndex);
+      const state = setStates[setIndex];
+      shell.querySelector('[data-action="mute"]').textContent = `Mute: ${state.muted ? 'on' : 'off'}`;
+      shell.querySelector('[data-action="play"]').textContent = state.playing ? 'Pause' : 'Play';
+      shell.querySelectorAll('video').forEach(video => { video.muted = state.muted; });
+    }
+
+    function updateActiveUi(setIndex) {
+      const shell = shellFor(setIndex);
+      const state = setStates[setIndex];
+      shell.querySelectorAll('.case-tab').forEach((tab, index) => {
+        tab.classList.toggle('active', index === state.caseIndex);
+      });
+    }
+
+    function activateCase(setIndex, caseIndex, reset) {
+      const set = FLAT_SETS[setIndex];
+      const state = setStates[setIndex];
+      state.caseIndex = Math.max(0, Math.min(caseIndex, set.cases.length - 1));
+
+      const shell = shellFor(setIndex);
+      const track = shell.querySelector('[data-role="track"]');
+      track.style.transform = `translateX(-${state.caseIndex * 100}%)`;
+
+      const slides = Array.from(shell.querySelectorAll('.slide'));
+      const active = slides[state.caseIndex];
+      const prev = slides[state.caseIndex - 1];
+      const next = slides[state.caseIndex + 1];
+      ensureSlideLoaded(active);
+      ensureSlideLoaded(prev);
+      ensureSlideLoaded(next);
+
+      pauseAllSetVideos(setIndex);
+      const activeVideos = active ? Array.from(active.querySelectorAll('video')) : [];
+      syncActiveVideos(setIndex, activeVideos, reset);
+      updateActiveUi(setIndex);
+      updateControls(setIndex);
+    }
+
+    function shiftCase(setIndex, delta) {
+      const set = FLAT_SETS[setIndex];
+      const state = setStates[setIndex];
+      const nextIndex = (state.caseIndex + delta + set.cases.length) % set.cases.length;
+      activateCase(setIndex, nextIndex, true);
+    }
+
+    function bindSetControls(setIndex) {
+      const shell = shellFor(setIndex);
+      const state = setStates[setIndex];
+
+      const prevBtn = shell.querySelector('[data-action="prev"]');
+      const nextBtn = shell.querySelector('[data-action="next"]');
+      const restartBtn = shell.querySelector('[data-action="restart"]');
+      const muteBtn = shell.querySelector('[data-action="mute"]');
+      const playBtn = shell.querySelector('[data-action="play"]');
+
+      prevBtn.addEventListener('click', () => {
+        shiftCase(setIndex, -1);
+        prevBtn.blur();
+      });
+      nextBtn.addEventListener('click', () => {
+        shiftCase(setIndex, 1);
+        nextBtn.blur();
+      });
+      restartBtn.addEventListener('click', () => {
+        activateCase(setIndex, state.caseIndex, true);
+        restartBtn.blur();
+      });
+      muteBtn.addEventListener('click', () => {
+        state.muted = !state.muted;
+        updateControls(setIndex);
+        muteBtn.blur();
+      });
+      playBtn.addEventListener('click', () => {
+        state.playing = !state.playing;
+        if (state.playing) {
+          activateCase(setIndex, state.caseIndex, false);
+        } else {
+          pauseAllSetVideos(setIndex);
+          stopSyncTimer(setIndex);
+          updateControls(setIndex);
+        }
+        playBtn.blur();
+      });
+    }
+
+    function renderAllSets() {
+      renderSetScaffolds();
+      FLAT_SETS.forEach((_, setIndex) => {
+        renderTrack(setIndex);
+        renderCaseTabs(setIndex);
+        bindSetControls(setIndex);
+        activateCase(setIndex, 0, true);
+      });
+    }
+
+    function init() {
+      renderAllSets();
+    }
+
+    init();
+  </script>
+</body>
+</html>
