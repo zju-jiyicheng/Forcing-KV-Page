@@ -3,9 +3,6 @@
 This folder is a minimal export of the local homepage.
 
 Contents:
-- `index.html`
+- `click_me_to_see_demos.html`
 - `assets/fonts/`
-- `assets/placeholders/`
 - `assets/videos/`
-
-It is designed so this folder can be used directly as a GitHub Pages site root.
