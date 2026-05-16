@@ -1198,8 +1198,8 @@
         group: 'krea_5s',
         setOrder: 6,
         setLabel: 'Set 6',
-        label: 'Krea 5s',
-        baseModel: 'krea',
+        label: 'Krea-14B 5s',
+        baseModel: 'krea-14b',
         frames: 81,
         fps: 16,
         seconds: 5,
@@ -1207,8 +1207,8 @@
         title,
         prompt: KREA_PROMPTS[file] || title,
         methods: [
-          extraMethod('assets/videos/krea_5s', 'krea', file, 'Krea', 'host', 'host model'),
-          extraMethod('assets/videos/krea_5s', 'forcingkv', file, 'Krea + ForcingKV', 'ours', 'our method')
+          extraMethod('assets/videos/krea_5s', 'krea', file, 'Krea-14B', 'host', 'host model'),
+          extraMethod('assets/videos/krea_5s', 'forcingkv', file, 'Krea-14B + ForcingKV', 'ours', 'our method')
         ]
       };
     };
@@ -1317,15 +1317,15 @@ The man softly pats the cat's head twice before returning both hands to the keyb
     DATA.families.push(
       {
         id: 'krea',
-        label: 'Krea',
+        label: 'Krea-14B',
         description: '',
         sets: [
           {
             id: 'krea_5s',
             setOrder: 6,
             setLabel: 'Set 6',
-            label: 'Krea 5s',
-            baseModel: 'krea',
+            label: 'Krea-14B 5s',
+            baseModel: 'krea-14b',
             frames: 81,
             fps: 16,
             seconds: 5,
@@ -1373,10 +1373,9 @@ The man softly pats the cat's head twice before returning both hands to the keyb
             fps: 16,
             seconds: 5,
             cases: [
-              makeCausalForcingCase(1, 'a blue bird-0.mp4'),
-              makeCausalForcingCase(2, 'a blue car-0.mp4'),
-              makeCausalForcingCase(3, 'a blue umbrella-0.mp4'),
-              makeCausalForcingCase(4, 'a boat accelerating to gain speed-0.mp4')
+              makeCausalForcingCase(1, 'a boat accelerating to gain speed-0.mp4'),
+              makeCausalForcingCase(2, 'a blue bird-0.mp4'),
+              makeCausalForcingCase(3, 'a blue umbrella-0.mp4')
             ]
           }
         ]
@@ -1396,9 +1395,9 @@ The man softly pats the cat's head twice before returning both hands to the keyb
             fps: 16,
             seconds: 5,
             cases: [
-              makeRavenCase(1, 'A beautiful coastal beach in spring, waves lapping on sand, featuring a steady and smooth perspective-0.mp4'),
-              makeRavenCase(2, 'A beautiful coastal beach in spring, waves lapping on sand, in cyberpunk style-0.mp4'),
-              makeRavenCase(3, 'A cute happy Corgi playing in park, sunset, in super slow motion-0.mp4')
+              makeRavenCase(1, 'A cute happy Corgi playing in park, sunset, in super slow motion-0.mp4'),
+              makeRavenCase(2, 'A beautiful coastal beach in spring, waves lapping on sand, featuring a steady and smooth perspective-0.mp4'),
+              makeRavenCase(3, 'A beautiful coastal beach in spring, waves lapping on sand, in cyberpunk style-0.mp4')
             ]
           }
         ]
@@ -1410,8 +1409,8 @@ The man softly pats the cat's head twice before returning both hands to the keyb
       'longlive_30s',
       'longlive_5s',
       'longlive_interactive_60s',
-      'krea_5s',
       'causal_forcing_5s',
+      'krea_5s',
       'raven_5s',
       'self_forcing_30s_refine',
       'self_forcing_5s'
