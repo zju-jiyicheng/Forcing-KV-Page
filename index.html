@@ -1213,6 +1213,65 @@
       };
     };
 
+    const CAUSAL_FORCING_PROMPTS = {
+      'a blue bird-0.mp4': `A vibrant blue bird perched gracefully on a branch in a lush forest, surrounded by dense green foliage and blooming flowers. The bird has bright blue feathers with a slight iridescent sheen, a curved beak, and expressive black eyes. It tilts its head curiously, preening its feathers with its foot. The forest background is filled with sunlight filtering through the leaves, casting dappled shadows. Medium close-up shot focusing on the bird.`,
+      'a blue car-0.mp4': `A sleek, modern blue sedan driving down a bustling city street during rush hour. The car has a glossy finish, reflecting the bright sunlight. The streets are lined with tall buildings and other vehicles, creating a vibrant urban environment. The camera follows the car as it weaves through traffic, capturing the dynamic motion and interaction with surrounding cars. Wide shot, showing the car within the context of the busy cityscape.`,
+      'a blue umbrella-0.mp4': `A close-up view of a blue umbrella lying on a wet pavement under a light drizzle. The umbrella has a sleek, modern design with a slight curve at the top. Its fabric is glossy and water-resistant, with droplets of rainwater slowly rolling off the surface. In the background, blurred pedestrians walk past, creating a sense of movement and life. The scene is captured in a soft, ambient lighting style, emphasizing the serene and peaceful atmosphere of a rainy day. Medium shot.`,
+      'a boat accelerating to gain speed-0.mp4': `A sleek, modern boat accelerating across the water to gain speed. The boat's hull slices through the waves, creating a trail of white foam behind it. The sun glints off the water, casting shimmering reflections. The boat's engine roars as it speeds up, and the spray from the bow sprays upwards. Focus on the dynamic motion of the boat as it accelerates, with a medium shot capturing the entirety of the boat and the surrounding water. No camera movement, just a static yet action-packed scene.`
+    };
+
+    const makeCausalForcingCase = (index, file) => {
+      const title = file.replace(/-\d+\.mp4$/, '');
+      return {
+        id: `causal_forcing_5s-${index}`,
+        index,
+        group: 'causal_forcing_5s',
+        setOrder: 8,
+        setLabel: 'Set 8',
+        label: 'Causal Forcing 5s',
+        baseModel: 'causal forcing',
+        frames: 81,
+        fps: 16,
+        seconds: 5,
+        filename: file,
+        title,
+        prompt: CAUSAL_FORCING_PROMPTS[file] || title,
+        methods: [
+          extraMethod('assets/videos/causal_forcing_5s', 'baseline', file, 'Causal Forcing', 'host', 'host model'),
+          extraMethod('assets/videos/causal_forcing_5s', 'forcingkv', file, 'Causal Forcing + ForcingKV', 'ours', 'our method')
+        ]
+      };
+    };
+
+    const RAVEN_PROMPTS = {
+      'A beautiful coastal beach in spring, waves lapping on sand, featuring a steady and smooth perspective-0.mp4': `A serene coastal beach in spring, showcasing a picturesque blend of golden sand and crystal-clear turquoise waters. Gentle waves lap at the shore, creating a soothing rhythm. In the foreground, palm trees sway gently in the breeze, their leaves casting dappled shadows on the sand. The sky is a soft pastel shade of blue, with wisps of clouds drifting lazily across. A steady and smooth perspective captures the tranquil beauty of the beach, focusing on the interplay between the water and the sandy shoreline. Wide shot, maintaining a static viewpoint to emphasize the peaceful atmosphere.`,
+      'A beautiful coastal beach in spring, waves lapping on sand, in cyberpunk style-0.mp4': `In a cyberpunk-themed coastal beach during spring, the sun sets over a futuristic horizon, casting a neon glow over the scene. Waves gently lap against the sandy shore, reflecting the vibrant hues of the city lights and holographic advertisements above. The beach is lined with sleek, metallic structures and glowing billboards. In the foreground, the sand is dotted with scattered debris and discarded technology. The water appears dark and mysterious, with occasional reflections of the surrounding cybernetic architecture. Medium shot capturing the interplay between nature and technology.`,
+      'A cute happy Corgi playing in park, sunset, in super slow motion-0.mp4': `A happy and playful Corgi running and frolicking in a sunlit park during the golden hour of sunset. The Corgi has a joyful expression, wagging its tail and chasing after a small ball. The park is lush with green grass and vibrant flowers, creating a serene and picturesque backdrop. The sunlight filters through the trees, casting a warm glow over the scene. The video is captured in super slow motion, emphasizing the fluidity of the dog's movements and the beauty of the surroundings. Wide shot, capturing the expansive park landscape.`
+    };
+
+    const makeRavenCase = (index, file) => {
+      const title = file.replace(/-\d+\.mp4$/, '');
+      return {
+        id: `raven_5s-${index}`,
+        index,
+        group: 'raven_5s',
+        setOrder: 9,
+        setLabel: 'Set 9',
+        label: 'Raven 5s',
+        baseModel: 'raven',
+        frames: 81,
+        fps: 16,
+        seconds: 5,
+        filename: file,
+        title,
+        prompt: RAVEN_PROMPTS[file] || title,
+        methods: [
+          extraMethod('assets/videos/raven', 'baseline', file, 'Raven', 'host', 'host model'),
+          extraMethod('assets/videos/raven', 'forcingkv', file, 'Raven + ForcingKV', 'ours', 'our method')
+        ]
+      };
+    };
+
     const LONG_LIVE_INTERACTIVE_PROMPTS = [
       {
         title: 'Poker Player',
@@ -1298,6 +1357,51 @@ The man softly pats the cat's head twice before returning both hands to the keyb
             ]
           }
         ]
+      },
+      {
+        id: 'causal_forcing',
+        label: 'Causal Forcing',
+        description: '',
+        sets: [
+          {
+            id: 'causal_forcing_5s',
+            setOrder: 8,
+            setLabel: 'Set 8',
+            label: 'Causal Forcing 5s',
+            baseModel: 'causal forcing',
+            frames: 81,
+            fps: 16,
+            seconds: 5,
+            cases: [
+              makeCausalForcingCase(1, 'a blue bird-0.mp4'),
+              makeCausalForcingCase(2, 'a blue car-0.mp4'),
+              makeCausalForcingCase(3, 'a blue umbrella-0.mp4'),
+              makeCausalForcingCase(4, 'a boat accelerating to gain speed-0.mp4')
+            ]
+          }
+        ]
+      },
+      {
+        id: 'raven',
+        label: 'Raven',
+        description: '',
+        sets: [
+          {
+            id: 'raven_5s',
+            setOrder: 9,
+            setLabel: 'Set 9',
+            label: 'Raven 5s',
+            baseModel: 'raven',
+            frames: 81,
+            fps: 16,
+            seconds: 5,
+            cases: [
+              makeRavenCase(1, 'A beautiful coastal beach in spring, waves lapping on sand, featuring a steady and smooth perspective-0.mp4'),
+              makeRavenCase(2, 'A beautiful coastal beach in spring, waves lapping on sand, in cyberpunk style-0.mp4'),
+              makeRavenCase(3, 'A cute happy Corgi playing in park, sunset, in super slow motion-0.mp4')
+            ]
+          }
+        ]
       }
     );
 
@@ -1307,6 +1411,8 @@ The man softly pats the cat's head twice before returning both hands to the keyb
       'longlive_5s',
       'longlive_interactive_60s',
       'krea_5s',
+      'causal_forcing_5s',
+      'raven_5s',
       'self_forcing_30s_refine',
       'self_forcing_5s'
     ];
